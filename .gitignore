@@ -1,0 +1,37 @@
+# Archivos y carpetas de Unity que no deben subirse
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+Packages/*/
+Packages/manifest.json
+Packages/packages-lock.json
+
+# Archivos de configuración de usuario
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# Archivos de Visual Studio
+.vscode/
+*.csproj
+*.sln
+*.unityproj
+
+# Archivos de compilación y temporales
+*.apk
+*.aab
+*.exe
+*.app
+*.ipa
+*.log
+*.DS_Store
