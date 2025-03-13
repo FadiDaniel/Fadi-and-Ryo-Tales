@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Suelo
   - Personaje
+  - Gema
+  - Caballero
+  - Espada
+  - Enemigo
   layers:
   - Default
   - TransparentFX
