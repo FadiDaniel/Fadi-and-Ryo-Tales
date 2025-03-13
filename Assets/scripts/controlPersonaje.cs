@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class controlPersonaje : MonoBehaviour
 {
+    public int vida=4;
     public float velocidad = 5f;
     public float fuerzaSalto= 7f;
     public float fuerzaRebote= 5.5f;
@@ -11,6 +13,7 @@ public class controlPersonaje : MonoBehaviour
     private bool recibiendoDanio;
     private bool sanando;
     private bool atacando;
+    public bool isMuerto;
     private Rigidbody2D rb;
     public Animator animator;
 
@@ -23,21 +26,24 @@ public class controlPersonaje : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!atacando && !sanando)
+        if(!isMuerto)
         {
-            // actualiza posicion y animacion de movimiento
-            movimiento();
-            // revision para salto
-            salto();
-        }
-        if(!recibiendoDanio && !sanando)
-        {
-            // revision para ataque
-            ataque();
+            if(!atacando && !sanando)
+            {
+                // actualiza posicion y animacion de movimiento
+                movimiento();
+                // revision para salto
+                salto();
+            }
+            if(!recibiendoDanio && !sanando)
+            {
+                // revision para ataque
+                ataque();
+            }
         }
         animaciones();
-        
     }
+
     public void animaciones()
     {
         // de recibiendo daño
@@ -46,6 +52,8 @@ public class controlPersonaje : MonoBehaviour
         animator.SetBool("sanando", sanando);
         // de ataque
         animator.SetBool("atacando", atacando);
+        // de muerte 
+        animator.SetBool("muerto",isMuerto);
     }
 
     public void atacar()
@@ -61,6 +69,7 @@ public class controlPersonaje : MonoBehaviour
     public void recibeSalud()
     {
         sanando = true; 
+        vida+=1;
         // codigo para aumentar corazones
     }
 
@@ -74,9 +83,30 @@ public class controlPersonaje : MonoBehaviour
         if(!recibiendoDanio)
         {
             recibiendoDanio = true;
+            vida -= cantidadDanio;
+            if(vida <= 0) 
+            {
+                 StartCoroutine(Matar());
+            }
             Vector2 rebote = new Vector2(transform.position.x - direccion.x, 0.8f).normalized;
             rb.AddForce(rebote*fuerzaRebote,ForceMode2D.Impulse);
+            
         }
+    }
+
+    // corrutina para ejecutar animacion de muerte despues de terminar animacion de golpe
+    IEnumerator Matar()
+    {
+        yield return new WaitForSeconds(0.8f);
+        isMuerto = true;
+        StartCoroutine(GameOver());
+    }
+
+    // cuando muere se envia al Game Over 
+    IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(2f);
+        // codigo para enviar al ## GAME OVER ### 
     }
 
     public void desactivaDanio() // llamado desde el fin de la animacion de daño

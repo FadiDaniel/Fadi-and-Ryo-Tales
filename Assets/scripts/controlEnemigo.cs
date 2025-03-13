@@ -4,6 +4,7 @@ using UnityEngine;
 public class controlEnemigo : MonoBehaviour
 {
     public Transform jugador;
+    public int vida;
     public float radioDeteccion = 7.7f;
     public float velocidad = 13f;
     public float fuerzaRebote = 8f;
@@ -11,11 +12,15 @@ public class controlEnemigo : MonoBehaviour
     private Vector2 movimiento;
     private bool enMovimiento;
     private bool recibiendoDanio;
+    private bool caballeroVivo;
+    private bool isMuerto;
     public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        vida = 2;
+        caballeroVivo =true;
         rb = GetComponent<Rigidbody2D>();    
         animator = GetComponent<Animator>();
     }
@@ -23,13 +28,18 @@ public class controlEnemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       DetectarYSeguir();
-       animaciones();
+        if(caballeroVivo && !isMuerto)
+        {
+        DetectarYSeguir();
+        }
+        animaciones();
     }
 
     void animaciones()
     {
+        animator.SetBool("enMovimiento",enMovimiento);
         animator.SetBool("herido",recibiendoDanio);
+        animator.SetBool("muerto", isMuerto);
     }
 
     // COLISION CONTRA PERSONAJE
@@ -37,9 +47,18 @@ public class controlEnemigo : MonoBehaviour
     {   // compara si la colision se hizo contra un objeto etiquetado como caballero
         if (collision.gameObject.CompareTag("Caballero"))
         {
+            if(isMuerto)
+                return;
             Vector2 direccionDanio = new Vector2(transform.position.x,0);
-            // llama a una funcion del personaje Caballero para hacerle daño  
-            collision.gameObject.GetComponent<controlPersonaje>().recibeDanio(direccionDanio,1); // se le pasa la direccion y la cantidad de daño
+            // guarda el acceso al script del Caballero en una variable
+            controlPersonaje scriptCaballero = collision.gameObject.GetComponent<controlPersonaje>();
+            // llama a una funcion del personaje Caballero para hacerle daño, se le pasa la direccion y la cantidad de daño
+            scriptCaballero.recibeDanio(direccionDanio,1);  
+            caballeroVivo = !scriptCaballero.isMuerto;
+            if(!caballeroVivo)
+            {
+                enMovimiento = false;
+            }
         }
     }
 
@@ -58,18 +77,23 @@ public class controlEnemigo : MonoBehaviour
         if(!recibiendoDanio)
         {
             recibiendoDanio = true;
+            vida-=1;
             Vector2 rebote = new Vector2(transform.position.x - direccion.x, 0.8f).normalized;
             rb.AddForce(rebote*fuerzaRebote,ForceMode2D.Impulse);
             StartCoroutine(desactivarDanio());
         }
     }
     
-    // Corutina para desactivar el daño (pudimos llamar a una funcion al final de la animacion de daño pero queriamos intentar con esto)
+    // Corrutina para desactivar el daño (pudimos llamar a una funcion al final de la animacion de daño pero queriamos intentar con esto)
     IEnumerator desactivarDanio()
     {
         yield return new WaitForSeconds(0.8f);
         recibiendoDanio = false;
         rb.linearVelocity = Vector2.zero;
+        if(vida<=0)
+        {
+            isMuerto = true;
+        }
     }
 
     void DetectarYSeguir() // calcula la diostancia del jugador y compara si esta dentro del rango de deteccion para seguirlo 
@@ -103,7 +127,7 @@ public class controlEnemigo : MonoBehaviour
         {
             rb.MovePosition(rb.position + movimiento * velocidad * Time.deltaTime);
         }
-        animator.SetBool("enMovimiento",enMovimiento);
+        
     }
 
     // funcion que ayuda a ver el rango de deteccion del enemigo 

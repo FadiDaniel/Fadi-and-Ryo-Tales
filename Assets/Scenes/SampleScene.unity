@@ -227,8 +227,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 442123659
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -7385789195546760866, guid: de0af3292e469ed49a2e99195504d9c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04402f6ac86eda245976716adec948a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vida: 4
   velocidad: 5
   fuerzaSalto: 7
   fuerzaRebote: 5.5
@@ -325,6 +326,7 @@ MonoBehaviour:
   capaSuelo:
     serializedVersion: 2
     m_Bits: 256
+  isMuerto: 0
   animator: {fileID: 62360127}
 --- !u!1 &180060572
 GameObject:
@@ -510,7 +512,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -578,7 +580,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000001d16a9710b5b2a4c2f2e4f81e557d669713a4f5f8b455a1a373b3e0b636f76ab
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -687,7 +689,7 @@ Transform:
   m_GameObject: {fileID: 1327825086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.097, y: 1.093, z: -0.066384785}
+  m_LocalPosition: {x: 3.99, y: 1.28, z: -0.066384785}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -807,8 +809,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 188627767
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 2c582010e442ee74c94eb7c6c869e323, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -856,6 +858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jugador: {fileID: 62360126}
+  vida: 0
   radioDeteccion: 7.7
   velocidad: 13
   fuerzaRebote: 8
@@ -988,7 +991,7 @@ Transform:
   m_GameObject: {fileID: 1546308295}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.17, y: -1.15, z: 0}
+  m_LocalPosition: {x: 10.23, y: -1.13, z: 0}
   m_LocalScale: {x: 13.771161, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1122,8 +1125,8 @@ Transform:
   m_GameObject: {fileID: 1803029286}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4738, y: -2.506, z: 0}
-  m_LocalScale: {x: 14.3399105, y: 1, z: 1}
+  m_LocalPosition: {x: -1.6951, y: -2.6, z: 0}
+  m_LocalScale: {x: 16.470877, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1189,7 +1192,7 @@ Transform:
   m_GameObject: {fileID: 2088335275}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.27, y: 1.41, z: -0.0697}
+  m_LocalPosition: {x: 6.21, y: 1.39, z: -0.0697}
   m_LocalScale: {x: 1.1294, y: 1.1294, z: 1.1294}
   m_ConstrainProportionsScale: 0
   m_Children: []
