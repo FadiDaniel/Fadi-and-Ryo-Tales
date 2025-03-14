@@ -14,6 +14,7 @@ public class controlPersonaje : MonoBehaviour
     private bool recibiendoDanio;
     private bool sanando;
     private bool atacando;
+    private bool meditando;
     public bool isMuerto;
     private Rigidbody2D rb;
     public Animator animator;
@@ -55,6 +56,8 @@ public class controlPersonaje : MonoBehaviour
         animator.SetBool("atacando", atacando);
         // de muerte 
         animator.SetBool("muerto",isMuerto);
+        // de meditar 
+        animator.SetBool("meditando",meditando);
     }
 
     public void atacar()
@@ -102,6 +105,10 @@ public class controlPersonaje : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         isMuerto = true;
         StartCoroutine(GameOver());
+    }
+
+    public void meditar(){
+        meditando = true;
     }
 
     // cuando muere se envia al Game Over 

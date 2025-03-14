@@ -113,7 +113,7 @@ public class controlEnemigo : MonoBehaviour
         }
     }
 
-    void DetectarYSeguir() // calcula la diostancia del jugador y compara si esta dentro del rango de deteccion para seguirlo 
+    void DetectarYSeguir() // calcula la distancia del jugador y compara si esta dentro del rango de deteccion para seguirlo 
     {
     float distanciaDeJugador = Vector2.Distance(transform.position, jugador.position);
         if(distanciaDeJugador < radioDeteccion)
