@@ -1,14 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class controlPersonaje : MonoBehaviour
 {
     public int vida=4;
     public float velocidad = 5f;
-    public float fuerzaSalto= 7f;
+    public float fuerzaSalto= 8f;
     public float fuerzaRebote= 5.5f;
-    public float longitudRaycast = 0.80f; // linea invisible para detectar colision con el suelo 
-    public LayerMask capaSuelo;
+    // public float longitudRaycast = 0.80f; // linea invisible para detectar colision con el suelo 
+    // public LayerMask capaSuelo;
     private bool enSuelo;
     private bool recibiendoDanio;
     private bool sanando;
@@ -33,7 +34,7 @@ public class controlPersonaje : MonoBehaviour
                 // actualiza posicion y animacion de movimiento
                 movimiento();
                 // revision para salto
-                salto();
+                escuchaSalto();
             }
             if(!recibiendoDanio && !sanando)
             {
@@ -69,7 +70,8 @@ public class controlPersonaje : MonoBehaviour
     public void recibeSalud()
     {
         sanando = true; 
-        vida+=1;
+        if(vida <4)
+            vida+=1;
         // codigo para aumentar corazones
     }
 
@@ -106,7 +108,7 @@ public class controlPersonaje : MonoBehaviour
     IEnumerator GameOver()
     {
         yield return new WaitForSeconds(2f);
-        // codigo para enviar al ## GAME OVER ### 
+        SceneManager.LoadScene("GameOver");
     }
 
     public void desactivaDanio() // llamado desde el fin de la animacion de daño
@@ -138,17 +140,36 @@ public class controlPersonaje : MonoBehaviour
         // cambia animacion si se esta en el suelo o no
         animator.SetBool("enSuelo",enSuelo);
     }
-    public void salto()
+    public void escuchaSalto()
     {
-        // detectar si esta colicionando con el suelo
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down,longitudRaycast,capaSuelo);
-        enSuelo = hit.collider != null;
+            // ## PRUEBA DE COLISION CON RAYCAST ##
+        // // detectar si esta colicionando con el suelo
+        // RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down,longitudRaycast,capaSuelo);
+        // enSuelo = hit.collider != null;
+
         // SALTAR con la flecha de arriba si no se esta recibiendo daño y se toca el suelo
         if (enSuelo && Input.GetKeyDown(KeyCode.UpArrow) && !recibiendoDanio) 
         {
             rb.AddForce(new Vector2(0f, fuerzaSalto), ForceMode2D.Impulse);
         }
     }
+
+    // REMPLAZO DE COLISION CON RAYCAST POR COLISION POR ETIQUETAS
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Suelo"))
+        {
+            enSuelo = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+         if (collision.gameObject.CompareTag("Suelo"))
+        {
+            enSuelo = true;
+        }
+    }
+
     public void ataque()
     {
         // ATAQUE   si no esta atacando y esta en el suelo
@@ -158,10 +179,10 @@ public class controlPersonaje : MonoBehaviour
         }
     }
 
-    // dibuja la linea invisible que detecta la colicion con el suelos @Override
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position,transform.position + Vector3.down * longitudRaycast);       
-    }
+    // // dibuja la linea invisible que detecta la colicion con el suelos @Override
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.blue;
+    //     Gizmos.DrawLine(transform.position,transform.position + Vector3.down * longitudRaycast);       
+    // }
 }

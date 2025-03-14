@@ -47,29 +47,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: New Layer 1
+  - name: fondo lejano
     uniqueID: 1906906653
     locked: 0
-  - name: New Layer 2
+  - name: fondo medio
     uniqueID: 1277844235
     locked: 0
-  - name: New Layer 3
+  - name: fondo cercano
     uniqueID: 2169450031
     locked: 0
-  - name: New Layer 4
+  - name: tras suelo
     uniqueID: 1775654885
     locked: 0
   - name: suelo
     uniqueID: 1599027825
+    locked: 0
+  - name: sobre suelo
+    uniqueID: 2876665699
     locked: 0
   - name: enemigo
     uniqueID: 188627767
     locked: 0
   - name: jugador
     uniqueID: 442123659
-    locked: 0
-  - name: New Layer 8
-    uniqueID: 2876665699
     locked: 0
   m_RenderingLayers:
   - Default

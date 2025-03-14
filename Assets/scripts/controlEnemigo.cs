@@ -5,9 +5,10 @@ public class controlEnemigo : MonoBehaviour
 {
     public Transform jugador;
     public int vida;
+    private bool enSuelo;
     public float radioDeteccion = 7.7f;
     public float velocidad = 13f;
-    public float fuerzaRebote = 8f;
+    public float fuerzaRebote = 6f;
     private Rigidbody2D rb;
     private Vector2 movimiento;
     private bool enMovimiento;
@@ -28,7 +29,7 @@ public class controlEnemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(caballeroVivo && !isMuerto)
+        if(caballeroVivo && enSuelo && !isMuerto)
         {
         DetectarYSeguir();
         }
@@ -39,6 +40,7 @@ public class controlEnemigo : MonoBehaviour
     {
         animator.SetBool("enMovimiento",enMovimiento);
         animator.SetBool("herido",recibiendoDanio);
+        animator.SetBool("enSuelo",enSuelo);
         animator.SetBool("muerto", isMuerto);
     }
 
@@ -60,7 +62,22 @@ public class controlEnemigo : MonoBehaviour
                 enMovimiento = false;
             }
         }
+        // si la colision es contra el suelo
+        if (collision.gameObject.CompareTag("Suelo"))
+        {
+            enSuelo = true;
+        }
     }
+
+    // deja de tocar el suelo
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Suelo"))
+        {
+            enSuelo = false;
+        }
+    }
+
 
     // COLISION CONTRA ESPADA
     private void OnTriggerEnter2D(Collider2D collision)
