@@ -118,6 +118,7 @@ public class controlPersonaje : MonoBehaviour
 
     public void meditar(){
         meditando = true;
+        rb.linearVelocity = Vector2.zero;
     }
 
     // cuando muere se envia al Game Over 
@@ -157,11 +158,6 @@ public class controlPersonaje : MonoBehaviour
         if(!recibiendoDanio)
         {
             transform.position = new Vector3(velocidadX + posicion.x, posicion.y, posicion.z);
-            // SONIDO CARRERA
-            // if(!sonidoCarrera.isPlaying && enSuelo)
-            //     sonidoCarrera.Play();
-            // else if(sonidoCarrera.isPlaying && !enSuelo || sonidoCarrera.isPlaying && movimiento == 0) 
-            //     sonidoCarrera.Stop();
         }
         // cambia animacion si se esta en el suelo o no
         animator.SetBool("enSuelo",enSuelo);
@@ -175,7 +171,7 @@ public class controlPersonaje : MonoBehaviour
         }
     }
 
-    // REMPLAZO DE COLISION CON RAYCAST POR COLISION POR ETIQUETAS
+    // COLISION POR ETIQUETAS
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Suelo"))
@@ -194,9 +190,10 @@ public class controlPersonaje : MonoBehaviour
     public void ataque()
     {
         // ATAQUE   si no esta atacando y esta en el suelo
-        if(Input.GetKeyDown(KeyCode.Space) && !atacando && enSuelo)
+        if(Input.GetKeyDown(KeyCode.Space) && !atacando)
         {
             atacar();
+            rb.AddForce(new Vector2(0f, -fuerzaSalto), ForceMode2D.Impulse);        
         }
     }
     // SONIDOS
