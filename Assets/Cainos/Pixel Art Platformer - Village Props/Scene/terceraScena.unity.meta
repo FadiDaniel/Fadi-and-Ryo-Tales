@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b599783abf0954049b804e0b1e086737
+timeCreated: 1584591611
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 166114
+  packageName: Pixel Art Platformer - Village Props
+  packageVersion: 2.3.0
+  assetPath: Assets/Cainos/Pixel Art Platformer - Village Props/Scene/SC Demo Scene
+    - Village Props.unity
+  uploadId: 584302

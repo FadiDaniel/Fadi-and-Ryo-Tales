@@ -10,9 +10,17 @@ public class controlCamara : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (objetivo.position.y <= -5)
+        {
+            // La camara se queda en su ultima posicion valida
+            return;
+        }
+
         Vector3 posicionDeseada = objetivo.position + desplazamiento;
         // efecto de suavizado en el movimiento de la camara 
         Vector3 posicionSuavizada = Vector3.Lerp(transform.position, posicionDeseada, velocidadCamara);
-        transform.position = posicionSuavizada;
+        
+        // Mantenemos la posición Z fija
+        transform.position = new Vector3(posicionSuavizada.x, posicionSuavizada.y, transform.position.z);
     } 
 }

@@ -6,7 +6,7 @@ public class controlEnemigo : MonoBehaviour
     public Transform jugador;
     public int vida;
     private bool enSuelo;
-    public float radioDeteccion = 7.7f;
+    public float radioDeteccion = 11f;
     public float velocidad = 13f;
     public float fuerzaRebote = 6f;
     private Rigidbody2D rb;
@@ -112,10 +112,19 @@ public class controlEnemigo : MonoBehaviour
             isMuerto = true;
         }
     }
+    public void paraliza()
+    {  // neutraliza el movimiento del enemigo para que no conserve el movimineto cuando se desactive la gravedad
+        rb.linearVelocity = Vector2.zero;
+    }
 
     void DetectarYSeguir() // calcula la distancia del jugador y compara si esta dentro del rango de deteccion para seguirlo 
     {
-    float distanciaDeJugador = Vector2.Distance(transform.position, jugador.position);
+        // eliminarlo si cae del mapa 
+        if(transform.position.y < -5)
+        {
+            Destroy(gameObject);
+        }
+        float distanciaDeJugador = Vector2.Distance(transform.position, jugador.position);
         if(distanciaDeJugador < radioDeteccion)
         {
             // sigue al jugador

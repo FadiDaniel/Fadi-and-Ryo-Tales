@@ -4,10 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class iniciarJuego : MonoBehaviour
 {
+    AudioSource musica;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        musica = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -15,6 +16,7 @@ public class iniciarJuego : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
+            musica.Play();
             StartCoroutine(Comenzar());
         }
     }
@@ -22,8 +24,8 @@ public class iniciarJuego : MonoBehaviour
     IEnumerator Comenzar()
     {
         // ## codigo para el sonido de inicio ##
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         // cargar escena despues de un segundo 
-        SceneManager.LoadScene("Pruebas");
+        SceneManager.LoadScene("Nivel_1F");
     }
 }

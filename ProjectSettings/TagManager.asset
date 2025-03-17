@@ -53,11 +53,23 @@ TagManager:
   - name: fondo medio
     uniqueID: 1277844235
     locked: 0
+  - name: fondo cercano 3
+    uniqueID: 1191293207
+    locked: 0
+  - name: fondo cercano2
+    uniqueID: 634231043
+    locked: 0
   - name: fondo cercano
     uniqueID: 2169450031
     locked: 0
+  - name: tras suelo2
+    uniqueID: 3987914165
+    locked: 0
   - name: tras suelo
     uniqueID: 1775654885
+    locked: 0
+  - name: suelo2
+    uniqueID: 517400165
     locked: 0
   - name: suelo
     uniqueID: 1599027825

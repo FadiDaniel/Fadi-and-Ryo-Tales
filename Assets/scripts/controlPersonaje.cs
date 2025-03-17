@@ -8,20 +8,28 @@ public class controlPersonaje : MonoBehaviour
     public float velocidad = 5f;
     public float fuerzaSalto= 8f;
     public float fuerzaRebote= 5.5f;
-    // public float longitudRaycast = 0.80f; // linea invisible para detectar colision con el suelo 
-    // public LayerMask capaSuelo;
     private bool enSuelo;
     private bool recibiendoDanio;
     private bool sanando;
     private bool atacando;
     private bool meditando;
     public bool isMuerto;
+    AudioSource[] sonidos;
+    public AudioSource sonidoCarrera, sonidoHerido, sonidoMuerte, sonidoEspadazo, sonidoSanar, sonidoEspadazo2, sonidoSalto;
     private Rigidbody2D rb;
     public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sonidos = GetComponents<AudioSource>();
+        sonidoCarrera = sonidos[0];
+        sonidoHerido = sonidos[1];
+        sonidoMuerte = sonidos[2];
+        sonidoEspadazo = sonidos[3];
+        sonidoSanar = sonidos[4];
+        sonidoEspadazo2 = sonidos[5];
+        sonidoSalto = sonidos[6];
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -102,6 +110,7 @@ public class controlPersonaje : MonoBehaviour
     // corrutina para ejecutar animacion de muerte despues de terminar animacion de golpe
     IEnumerator Matar()
     {
+        // ## sonido de muerte ->
         yield return new WaitForSeconds(0.8f);
         isMuerto = true;
         StartCoroutine(GameOver());
@@ -114,7 +123,7 @@ public class controlPersonaje : MonoBehaviour
     // cuando muere se envia al Game Over 
     IEnumerator GameOver()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("GameOver");
     }
 
@@ -127,9 +136,14 @@ public class controlPersonaje : MonoBehaviour
 
     void movimiento()
     {
+        if(transform.position.y <= -5) // si se cae del mapa 
+        {
+            StartCoroutine(Matar());
+        }
         // obtiene el desplazamiento actual para pasarselo al animator y que haga la animacion correspondiente, aparte de actualizar la posicion del personaje 
         float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime*velocidad;
-        animator.SetFloat("movimiento", velocidadX*velocidad);
+        float movimiento = velocidadX*velocidad;
+        animator.SetFloat("movimiento", movimiento);
         if (velocidadX > 0) // girar a la derecha
         {
             transform.localScale = new Vector3(1,1,1);
@@ -143,17 +157,17 @@ public class controlPersonaje : MonoBehaviour
         if(!recibiendoDanio)
         {
             transform.position = new Vector3(velocidadX + posicion.x, posicion.y, posicion.z);
+            // SONIDO CARRERA
+            // if(!sonidoCarrera.isPlaying && enSuelo)
+            //     sonidoCarrera.Play();
+            // else if(sonidoCarrera.isPlaying && !enSuelo || sonidoCarrera.isPlaying && movimiento == 0) 
+            //     sonidoCarrera.Stop();
         }
         // cambia animacion si se esta en el suelo o no
         animator.SetBool("enSuelo",enSuelo);
     }
     public void escuchaSalto()
     {
-            // ## PRUEBA DE COLISION CON RAYCAST ##
-        // // detectar si esta colicionando con el suelo
-        // RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down,longitudRaycast,capaSuelo);
-        // enSuelo = hit.collider != null;
-
         // SALTAR con la flecha de arriba si no se esta recibiendo daño y se toca el suelo
         if (enSuelo && Input.GetKeyDown(KeyCode.UpArrow) && !recibiendoDanio) 
         {
@@ -185,11 +199,42 @@ public class controlPersonaje : MonoBehaviour
             atacar();
         }
     }
-
-    // // dibuja la linea invisible que detecta la colicion con el suelos @Override
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.blue;
-    //     Gizmos.DrawLine(transform.position,transform.position + Vector3.down * longitudRaycast);       
-    // }
+    // SONIDOS
+    public void SOnCarrera()
+    {
+         if(!sonidoCarrera.isPlaying && enSuelo)
+                sonidoCarrera.Play();
+    }
+    public void SOffCarrera()
+    {
+        sonidoCarrera.Stop();
+    }
+    public void SOnHerido()
+    {
+        sonidoHerido.Play();
+    }
+    public void SOnMuerte()
+    {
+        sonidoMuerte.Play();
+    }
+    public void SOnEspadazo()
+    {
+        sonidoEspadazo.Play();
+    }
+    public void SOnSanar()
+    {
+        sonidoSanar.Play();
+    }
+        public void SOnEspadazo2()
+    {
+        sonidoEspadazo2.Play();
+    }
+    public void SOnSalto()
+    {
+        sonidoSalto.Play();     
+    }
+    public void SOffSalto()
+    {
+        sonidoSalto.Stop();     
+    }
 }

@@ -5,10 +5,12 @@ public class pausarJuego : MonoBehaviour
     public GameObject menuPausa;
     public GameObject btnPausa;
     public bool juegoPausado = false;
+    public AudioSource musica;
 
     void Start()
     {
        btnPausa = GameObject.Find("btnPause");
+       musica =  GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,7 @@ public class pausarJuego : MonoBehaviour
 
     public void reanudar()
     {
+        musica.Play();
         menuPausa.SetActive(false);
         btnPausa.SetActive(true);
         // velocidad de ejecucion del juego
@@ -38,6 +41,7 @@ public class pausarJuego : MonoBehaviour
 
     public void pausar()
     {
+        musica.Pause();
         menuPausa.SetActive(true);
         btnPausa.SetActive(false);
         // congela la ejecucion
